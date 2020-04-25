@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import api from '../../services/api';
 
@@ -14,11 +14,7 @@ const Dashboard: React.FC = () => {
     api.get('values/all').then(response => setSeenIndexes(response.data));
   }, []);
 
-  async function hanldeSubmit(
-    event: FormEvent<HTMLFormElement>,
-  ): Promise<void> {
-    event.preventDefault();
-
+  async function hanldeSubmit(): Promise<void> {
     await api.post('values', {
       index,
     });

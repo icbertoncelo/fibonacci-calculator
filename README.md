@@ -12,7 +12,8 @@ This project was developed to practice the docker concepts, it uses docker to ru
 
 ## Running application
 
-- First, set all environments variables. To make it, rename all '.env.example' files to '.env'.
+- First you must configure your environment, to make it, rename all '.env.example' files to '.env'. After that, set all environments variables.
+- Create a database using the same name was setted on '.env' file.
 - In server folder, build all containers.
 
 ```console
