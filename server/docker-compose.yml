@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  postgres:
+    image: 'postgres:latest'
+    env_file:
+      - .env
+    container_name: ${POSTGRES_DATABASE}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '${POSTGRES_PORT}:${POSTGRES_PORT}'
+  redis:
+    image: 'redis:latest'
+    env_file:
+      - .env
+    container_name: 'redis_fibonacci'
+    environment:
+      REDIS_HOST: ${REDIS_HOST}
+    ports:
+      - '${REDIS_PORT}:${REDIS_PORT}'
+  api:
+    depends_on:
+      - postgres
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - /app/node_modules
+      - .:/app
+    env_file:
+      - .env
+    container_name: 'server_fibonacci'
+    ports:
+      - '${APP_PORT}:${APP_PORT}'
+  worker:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ../worker
+    container_name: 'worker_fibonacci'
+    volumes:
+      - /app/node_modules
+      - ../worker:/app
+  client:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ../client
+    container_name: 'client_fibonacci'
+    volumes:
+      - /app/node_modules
+      - ../client:/app
+    stdin_open: true
+  nginx:
+    restart: always
+    depends_on:
+      - api
+      - client
+    build:
+      dockerfile: Dockerfile.dev
+      context: ../nginx
+    env_file:
+      - .env
+    container_name: 'nginx_fibonacci'
+    ports:
+      - '3050:${NGINX_PORT}'
