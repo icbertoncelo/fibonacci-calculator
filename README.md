@@ -5,7 +5,7 @@ This project was developed to practice the docker concepts, it uses docker to ru
 <!-- Chart -->
 <br />
 <p align="center">
-  <img src="https://raw.githubusercontent.com/icbertoncelo/fibonacci-calculator/master/web/images/chart.png" alt="chart" width="600" height="300">
+  <img src="https://raw.githubusercontent.com/icbertoncelo/fibonacci-calculator/master/client/images/fluxograma.png" alt="chart" width="600" height="300">
 
   <h3 align="center">Fluxograma</h3>
 </p>
